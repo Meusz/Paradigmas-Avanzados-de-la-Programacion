@@ -1,0 +1,524 @@
+
+/*1. Realiza una función iota que genere una lista con todos los enteros comprendidos
+entre 1 y n. Para n=0 devuelve la lista vacía*/
+
+object Ejercicio1 extends App {
+  val r = scala.util.Random
+  val array = new Array[Int](10)
+  for( i <- 0 to 9){
+    array(i) = r.nextInt(100)
+    println(array(i))
+  }
+  
+}
+
+object Ejercicio1_Recursivo extends App {
+  val r = scala.util.Random
+  
+  def Generar_Lista(n:Int): List[Int]={
+    if(n == 1)
+      List(r.nextInt(100))
+    else
+      List(r.nextInt(100)) ::: Generar_Lista(n-1)
+  }
+  
+  def Imprimir_Lista(l:List[Int]): Unit={
+    if(l != Nil){
+      print(l(0)+"\t")
+    
+      Imprimir_Lista(l.tail)
+    }
+    
+  }
+  
+  val lista = Generar_Lista(10)
+  Imprimir_Lista(lista)
+  
+}
+
+/*2. Dada una lista de enteros, realiza una función que devuelva la suma de los
+elementos que tiene una lista   1,2,5,7,8,9,11,1*/
+
+object Ejercicio2 extends App {
+  val lista_2 = List(1,2,5,7,8,9,11,1)
+  var suma = 0
+  for(variable <- lista_2)
+    suma += variable
+  println("La suma de la lista es: "+suma)
+}
+
+object Ejercicio2_Recursivo extends App {
+  def Sumar_Lista(l:List[Int]): Int={
+    if(l == Nil)
+      0
+    else
+      l(0)+Sumar_Lista(l.tail)
+       
+  }
+  
+  val lista = List(1,2,5,7,8,9,11,1)
+  print(Sumar_Lista(lista))
+}
+/*5. Realizar una función que sume los cuadrados de todos los enteros entre dos
+números a y b*/
+
+object Ejercicio5 extends App {
+  var a = 0
+  val b = 8
+  var result = 0.0
+  while(a<=b)
+    result += math.pow(a,2)
+    a += 1
+  println("La suma de la lista es: "+result)
+}
+
+object Ejercicio5_Recursivo extends App {
+  
+  def Suma_Cuadrados(a:Int,b:Int):Double={
+    if(a==b)
+      math.pow(a,2)
+    else
+      math.pow(a,2) + Suma_Cuadrados(a+1,b)
+  }
+  
+  val a = 0
+  val b = 8
+  
+  println("La suma de la lista es: "+Suma_Cuadrados(a,b))
+}
+/*
+ * 6. Realizar una función que realice el sumatorio entre a y b de una función (sumf1n)
+ */
+// la funcion que realizara sera f(x) = x^2 
+object Ejercicio6 extends App {
+  
+ def sumf1n(a:Int):Double={
+   var result = math.pow(a,2)
+   result
+ }
+  
+ def sumf1n(a:Int, b:Int):Double={
+    var x = a
+    val y = b
+    var result = 0.0
+    while (a <= b) {
+      result += sumf1n(a)
+      }
+  result }
+  
+ 
+}
+
+object Ejercicio6_Recursivo extends App {
+  
+ def sumf1n(a:Int):Double={
+   var result = math.pow(a,2)
+   result
+ }
+  
+ def Sumatorio_fun(a:Int, b:Int):Double={
+    if(a==b)
+      sumf1n(a)
+    else
+     sumf1n(a) + Sumatorio_fun(a+1,b)
+ }         
+    
+  val a = 0
+  val b = 8
+  
+  println("La suma es: "+Sumatorio_fun(a,b))
+}
+
+/*
+ 7. Escribir una función que sume los números que terminen en 2 o en 3 del 0 al N,
+utilizando la función sumf1n definida anteriormente.*/
+
+object Ejercicio7 extends App {
+ def sumf1n(a:Int):Double={
+   var result = math.pow(a,2)
+   result
+ }
+ 
+ def Sumar_2_3(N:Int):Double={
+    var x = 0
+    var result = 0.0
+    while (x <=  N) {
+      val str = x.toString()
+      if(str.charAt(str.length()-1).equals('2') || str.charAt(str.length()-1) == '3'){
+        
+        result += sumf1n(x)
+      }
+      x+=1
+    }
+  result }
+  
+  println(Sumar_2_3(20))
+} 
+
+
+object Ejercicio7_Recursivo extends App {
+ def sumf1n(a:Int):Double={
+   var result = math.pow(a,2)
+   result
+ }
+ 
+ def Sumar_2_3(N:Int):Double={
+   
+   Sumar_2_3_aux(20,0)
+ }
+ def Sumar_2_3_aux(N:Int,aux:Int):Double={
+   val str = aux.toString()
+   if(aux == N)
+     if(str.charAt(str.length()-1).equals('2') || str.charAt(str.length()-1) == '3')
+       sumf1n(aux)
+     else
+       0.0
+   else
+     if(str.charAt(str.length()-1).equals('2') || str.charAt(str.length()-1) == '3')
+        sumf1n(aux) + Sumar_2_3_aux(N,aux+1);
+     else
+       Sumar_2_3_aux(N,aux+1)
+    }
+  
+  println(Sumar_2_3(20))
+} 
+/*8. Escribir una función que, dado un número, devuelva cuántas cifras tiene.
+Considerar que el número 0 tiene 1 cifra.*/
+
+object Ejercicio8 extends App {
+  def Cifras_Tiene(a:Int):Int={
+    val str = a.toString() 
+    val i = str.length()
+    i  
+  }
+  
+  println(Cifras_Tiene(200))
+}
+
+object Ejercicio8_Recursivo extends App {
+  
+  def Cifras_Tiene(a:Int):Int={
+    Cifras_Tiene_aux(a,0)
+  }
+  def Cifras_Tiene_aux(a:Int,aux:Int):Int={
+    if( a/(math.pow(10,aux))>=1 )
+      1 + Cifras_Tiene_aux(a,aux+1)
+    else
+      if(a==0)
+        1
+      else
+        0
+   
+  }
+  
+  println(Cifras_Tiene(0))
+}
+/*9. Realiza dos funciones toma n l y deja n l, que devuelvan una nueva lista con los n
+primeros o sin los n primeros elementos de la lista l, respectivamente*/
+
+object Ejercicio9 extends App {
+  def toma_n_1(n:Int, l:List[Int]): Array[Int]={
+    val long = n
+    val Cadena_Salida = new Array[Int](long)
+    var i = 0
+    while(i<long){
+      Cadena_Salida(i) = l(i)
+      i+=1
+    }
+    Cadena_Salida
+  }
+  
+  def deja_n_1(n:Int, l:List[Int]): Array[Int]={
+    val long = l.length - n 
+    val Cadena_Salida = new Array[Int](long)
+    var i = n -1
+    var a = 0
+    while(i<l.length-1){
+        Cadena_Salida(a) = l(i)
+      i+=1
+      a+=1
+    }
+   
+    Cadena_Salida
+  }
+  println("lista toma:")
+  val lista_toma = toma_n_1(2, List(1,2,3,4,5,6,7,8,9) )
+  var i =0
+  while(i< lista_toma.length){
+    println(lista_toma(i))
+    i+=1
+  }
+  println("\n\nlista deja:")
+  val lista_deja = deja_n_1(2, List(1,2,3,4,5,6,7,8,9) )
+  var a =0
+  while(a< lista_deja.length){
+    println(lista_deja(a))
+    a+=1
+  }
+  
+}
+
+
+object Ejercicio9_Recursivo extends App {
+  
+  def toma_n_1(n:Int, l:List[Int]): List[Int]={
+    toma_n_1_aux(n,0,l)
+  }
+  def toma_n_1_aux(n:Int,aux:Int, l:List[Int]): List[Int]={
+    if(aux+1 == n)
+      List(l(aux))
+    else
+      List(l(aux)) ::: toma_n_1_aux(n,aux+1,l)
+  }
+  
+  def deja_n_1(n:Int, l:List[Int]): List[Int]={
+    if(n == 0)
+      l
+    else
+      deja_n_1(n-1,l.tail)
+  }
+  
+  def Imprimir_Lista(l:List[Int]): Unit={
+    if(l != Nil){
+      print(l(0)+"\t")
+    
+      Imprimir_Lista(l.tail)
+    }
+    
+  }
+  
+  
+  println("lista toma:")
+  val lista = List(1,2,3,4,5,6,7,8,9)
+  val lista_toma = toma_n_1(2, lista )
+  Imprimir_Lista(lista_toma)
+  
+  
+  println("\n\nlista deja:")
+  val lista_deja = deja_n_1(2, lista )
+  
+  Imprimir_Lista(lista_deja)
+  
+}
+
+/*11. Escribir la función imprimir l donde l es una lista de enteros del 0 al 9, con longitud
+16 (4*4).*/
+object Ejercicio11 extends App {
+  def Imprimir(l:List[Int]): Unit ={
+    var a = 0
+    while(a<4){
+      var b = 0
+      while(b<4){
+        print( l(a*4+b) +"\t")
+        b+=1
+      }
+      println()
+      a+=1
+    }
+    println()
+  }
+  
+  Imprimir(List(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16))
+  
+}
+
+object Ejercicio11_Recursivo extends App {
+  
+  def Imprimir_matriz_4x4(l:List[Int]): Unit ={
+    Imprimir_matriz_4x4_aux(0,0,l)
+  }
+  
+  def Imprimir_matriz_4x4_aux(x:Int,y:Int,l:List[Int]): Unit ={
+    if ( y != 4){
+      print( l(y*4+x) +"\t")
+      if(x==3){
+        println()
+        Imprimir_matriz_4x4_aux(0,y+1,l)
+      }
+      else 
+        Imprimir_matriz_4x4_aux(x+1,y,l)
+    } 
+  }
+  
+  Imprimir_matriz_4x4(List(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16))
+  
+}
+
+/*12. Supongamos que una matriz de enteros de 8 filas (numeradas de arriba abajo) x 8
+columnas (numeradas de izquierda a derecha) la representamos como una lista m
+de 64 elementos
+
+* Realizar las funciones de imprimir matriz, leer elemento, leer fila, leer columna y
+realizar traspuesta*/
+
+object Ejercicio12_Recursivo extends App {
+  
+  def Imprimir_matriz_8x8(l:List[Int]): Unit ={
+    Imprimir_matriz_8x8_aux(0,0,l)
+  }
+  
+  def Imprimir_matriz_8x8_aux(x:Int,y:Int,l:List[Int]): Unit ={
+    if ( y != 8){
+      print( l(y*8+x) +"\t")
+      if(x==7){
+        println()
+        Imprimir_matriz_8x8_aux(0,y+1,l)
+      }
+      else 
+        Imprimir_matriz_8x8_aux(x+1,y,l)
+    } 
+  }
+  
+  def Leer_elemento(x:Int, y:Int, l:List[Int]): Unit ={
+    println( "\n\nEl elemento en la posicion especificada es el "+l(y*8+x) +"\n\n")  
+  }
+  
+   def Leer_Fila(y:Int, l:List[Int]): Unit ={
+      Leer_Fila_aux(y,0,l)
+   }
+   def Leer_Fila_aux(y:Int,aux:Int, l:List[Int]): Unit ={
+     if(aux < 8){
+       print( l(y*8+aux) +"\t")
+       Leer_Fila_aux(y,aux+1,l)     }
+   }
+  
+   def Leer_Columna(x:Int, l:List[Int]): Unit ={
+      Leer_Fila_aux(0,x,l)
+   }
+   def Leer_Columna_aux(aux:Int,x:Int, l:List[Int]): Unit ={
+     if(aux < 8){
+       print( l(aux*8+x) +"\t")
+       Leer_Columna_aux(aux + 1 ,x,l)     }
+   }
+  
+   def Traspuesta(l:List[Int]): List[Int] ={
+    Traspuesta_aux(0,0,l)
+   }
+   
+   def Traspuesta_aux(x:Int,y:Int,l:List[Int]): List[Int] ={
+      if(y == 7 && x == 7)
+        List(l(x*8+y)) 
+      else{
+        if(x == 7)
+          List(l(x*8+y)) ::: Traspuesta_aux(0,y+1,l)
+        else
+          List(l(x*8+y)) ::: Traspuesta_aux(x+1,y,l)
+      }
+   }
+
+   
+   def Generar_Lista(n:Int): List[Int]={
+    if(n == 1)
+      List(r.nextInt(100))
+    else
+      List(r.nextInt(100)) ::: Generar_Lista(n-1)
+  }   
+   
+   
+   
+   
+  
+  val r = scala.util.Random
+  val lista = Generar_Lista(64)
+  println(lista(7))
+  println(lista(63))
+  println("La Lista es \n\n")
+  Imprimir_matriz_8x8(lista)
+  
+
+  Leer_elemento(6,7,lista)
+  
+  println("\nLa columna es \n")
+  Leer_Columna(6,lista)
+  println("\nLa Fila es \n")
+  Leer_Fila(5,lista)
+  
+  println("\nLa traspuesta es \n\n")
+  val traspuesta = Traspuesta(lista)
+  
+  Imprimir_matriz_8x8(traspuesta)
+  
+}
+
+
+object Ejercicio12 extends App {
+  
+  def Imprimir(l:Array[Int]): Unit ={
+    var a = 0
+    while(a<8){
+      var b = 0
+      while(b<8){
+        print( l(a*8+b) +"\t")
+        b+=1
+      }
+      println()
+      a+=1
+    }
+    println()
+  }
+  
+  def Leer_elemento(x:Int, y:Int, l:Array[Int]): Unit ={
+    println( "\n\nEl elemento en la posicion especificada es el"+l(y*8+x) +"\n\n")  
+  }
+  
+   def Leer_Fila(y:Int, l:Array[Int]): Unit ={
+    var a = 0
+    println( "\n\nLa fila tiene el valor : \n\n")
+    while(a<8){
+      print( l(y*8+a) +"\t")
+      a+=1
+    }
+    println("\n")
+  }
+  
+   def Leer_Columna(x:Int, l:Array[Int]): Unit ={
+    var a = 0
+    println( "\n\nLa columna tiene el valor : \n\n")
+    while(a<8){
+     
+      print( l(a*8+x) +"\t")
+      a+=1
+    }
+    println("\n")
+  }
+  def Traspuesta(l:Array[Int]): Array[Int] ={
+    var a = 0
+    val Lista_resultado = new Array[Int](64)
+
+    while(a<8){
+      var b = 0
+      while(b<8){
+        Lista_resultado(b*8+a) = l(a*8+b)
+        b+=1
+      }
+      a+=1
+    }
+    Lista_resultado
+  }
+   
+   
+  val r = scala.util.Random
+  val lista = new Array[Int](64)
+  var a = 0
+  while(a<64){
+     
+    lista(a) = r.nextInt(100)
+    a+=1
+  }
+  
+  println("La Lista es \n\n")
+  Imprimir(lista)
+  
+
+  Leer_elemento(6,7,lista)
+  
+  Leer_Columna(6,lista)
+  
+  Leer_Fila(5,lista)
+  
+  println("La traspuesta es \n\n")
+  val traspuesta = Traspuesta(lista)
+  
+  Imprimir(traspuesta)
+  
+}

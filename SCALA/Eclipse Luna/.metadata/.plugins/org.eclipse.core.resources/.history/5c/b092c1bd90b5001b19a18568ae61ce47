@@ -1,0 +1,15 @@
+
+
+object pruebas extends App {
+  def iota(m:Int):	List[Int]	=	m match {
+    case 0 =>	Nil
+    case m	=>	iota	(m-1):::m::Nil
+}																																																																																								//> iota: (m: Int)List[Int]
+val l= iota(9)		
+println()		//>	l		:	List[Int]	=	List(1,	2,	3,	4,	5,	6,	7,	8,	9)
+l.foreach{	e	=>	Thread.sleep(100);	print(e)	} 		//> 123456789
+val ll= iota(9).par																																																							//>	ll		:	
+//scala.collection.parallel.immutable.ParSeq[Int]	=	 ParVector(1,	2,	3,	4
+println()																																																																																							//| , 5, 6, 7, 8, 9)
+ll.foreach{	e	=>	Thread.sleep(100);	print(e)	} 		//> 175384269
+}

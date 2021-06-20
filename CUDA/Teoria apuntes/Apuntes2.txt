@@ -1,0 +1,17 @@
+400 ciclos de reloj de diferencia de acceso a diferentes niveles de memoria.
+En un proceso, siempre se ejecuta el warp completo, son 4 ciclos.
+
+
+Primitiva: Triangulos, textura, etc
+Rasterizacion: Conversion de poligonos a fragmentos tamaño pixel:
+	-Clippling ---> marcar triangulos fuera  de la vision de la camara
+	-Culling ---> Marcar triangulos dentro de la vision de la camara
+Realiza transformacion:
+	-Aplicacion de texturas
+	-Transformacion
+	
+
+ROP(Raster Operator Unit):
+	Prepara informacion para ser mostrada BLEnding compone la imagen.
+
+Antialiasing : Difuminacion y suavizado de los dientes de sierra que aparecen en una imagen.

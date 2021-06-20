@@ -1,0 +1,75 @@
+ Warp ---> 32 bits
+SM -----> 8 hilos en forma 4x2
+
+Acceso a memoria compartida, hay una diferencia de 400-600 ciclos de reloj entre GPU y CPU.
+
+Ej. Si una G80 accede a memoria a 86´4 GB/s . Pues accede a un SM, a una velocidad de 86´4/4 = 21´66 Gb/s
+
+
+----------------------------------------------------------------------------------------------------------
+En una G80 Suponiendo que tenemos matrices 8x8 
+a) ¿ Cuantos bloques de hilos como maximo se pueden?
+b) cada uno de los hilos consume 16 bytes ¿bloques de registros?
+c) cada uno de los bloques consume 4 Kb   ¿bloques de SM?
+
+G80 --> En un bloque corren 512 hilos y en 2-8 768 hilos. Como maximo tiene 8K = 8192 de memoria 
+
+a) 
+8x8 = 64 hilos
+SM = 768 hilos
+bloques = 768/64 = 12 -----> 12 > 8 bloquees que permite la G80 --> entonces tendremos maximo de 8 bloques de hilos
+
+Entones 8x64 = 512 hilos -----> 512  < 768 por lo que es valido
+b)
+64 hilos x 16 bytes = 1024 bytes
+
+8192/1024 = 8 bloques
+
+64 x 20 bytes = 1280
+
+8192/1280 = 6´4 --> 6 bloques
+
+6<8 --> entonces entra 6 bloques
+c)
+
+16k/4k = 4 bloques
+
+
+----------------------------------------------------------------------------------------------------------
+
+Calcula los ciclos de maquina en funcion de la operacion y el tipo de memoria usada
+<float z = float x + float y;>
+
+a) ¿Cual es el coste temporal si los accesos son a memoria global y operacion de suma y multiplicacion de float?
+
+
+b) ¿Cual es el coste temoporal si los accesos son a memoria compartida con operacion de suma y multiplicaccion de float.?
+
+a)
+Coste operacion en float = 4ciclos 
+Coste leer elementos = 4x3 cliclos
+Acceso a memoria globla = 400- 600
+Coste sincronizacion = 4 ciclos
+
+COSTE TOTAL = 420 - 620 ciclos
+b)
+Coste operacion en float = 4ciclos 
+Coste leer elementos en memoria compartida = 4x3 cliclo
+Coste sincronizacion = 4 ciclos
+
+COSTE TOTAL = 20 ciclos
+
+-------------------------------------------------------------------------------------------------------------
+
+Direccionamiento de bancos
+
+La memoria se divide en 16 bancos. Cuando lanzamos 256 hilos, tiene 8 warps,
+ va a ejecutar 8 warps. Debe acceder a MC accediendo en 2 ciclos. Si se produce conflicto, 
+de que todos  los hilos
+acceden al mismo banco, los ciclos aumentan hasta 16.
+
+
+
+
+
+
